@@ -7,13 +7,11 @@ function check-current-operatingsystem() {
         # If /etc/os-release file is present, source it to obtain system details
         # shellcheck source=/dev/null
         source /etc/os-release
-        CURRENT_DISTRO=${ID}                 # CURRENT_DISTRO holds the system's ID
-        CURRENT_DISTRO_VERSION=${VERSION_ID} # CURRENT_DISTRO_VERSION holds the system's VERSION_ID
-        CURRENT_DISTRO_LINUX=true            # CURRENT_DISTRO_LINUX is set to true as the system is Linux
+        CURRENT_DISTRO=${ID}      # CURRENT_DISTRO holds the system's ID
+        CURRENT_DISTRO_LINUX=true # CURRENT_DISTRO_LINUX is set to true as the system is Linux
     elif [ "$(uname -s)" == "Darwin" ]; then
-        CURRENT_DISTRO="Darwin"                           # If the output is Darwin, set CURRENT_DISTRO to macOS
-        CURRENT_DISTRO_VERSION=$(sw_vers -productVersion) # Fetch the macOS version using sw_vers
-        CURRENT_DISTRO_MACOS=true                         # CURRENT_DISTRO_MACOS is set to true as the system is macOS
+        CURRENT_DISTRO="Darwin"   # If the output is Darwin, set CURRENT_DISTRO to macOS
+        CURRENT_DISTRO_MACOS=true # CURRENT_DISTRO_MACOS is set to true as the system is macOS
     fi
 }
 
@@ -25,35 +23,43 @@ function check-dependencies() {
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
         # Check if the required dependencies are installed on Linux
         if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
-            INSTALL_DEPENDENCIES=true
+            INSTALL_DEPENDENCIES_LINUX=true
         fi
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
         # Check if the required dependencies are installed on macOS
         if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
-            INSTALL_DEPENDENCIES=true
+            INSTALL_DEPENDENCIES_MACOS=true
         fi
     fi
 }
 
 # Download and install the required dependencies
 function install-dependencies() {
+    # Check if the current os has the required dependencies
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
-        # Check if the required dependencies are installed on Linux
-        if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
-            sudo apt-get install build-essential procps curl file git -y
-        elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
-            sudo yum groupinstall 'Development Tools' -y
-            sudo yum install procps-ng curl file git -y
-        elif [ "$CURRENT_DISTRO" = "arch" ]; then
-            sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
-        fi
         # Install the required dependencies for Linux
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        brew install yt-dlp ffmpeg fprobe
+        if [ "$INSTALL_DEPENDENCIES_LINUX" = true ]; then
+            # Check if the required dependencies are installed on Linux
+            if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
+                sudo apt-get install build-essential procps curl file git -y
+            elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
+                sudo yum groupinstall 'Development Tools' -y
+                sudo yum install procps-ng curl file git -y
+            elif [ "$CURRENT_DISTRO" = "arch" ]; then
+                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
+            fi
+            # Install the required dependencies for Linux
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            brew install yt-dlp ffmpeg fprobe
+        fi
+    # Check if the current os has the required dependencies
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
         # Install the required dependencies for macOS
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        brew install yt-dlp ffmpeg fprobe
+        if [ "$INSTALL_DEPENDENCIES_MACOS" = true ]; then
+            # Install the required dependencies for macOS
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            brew install yt-dlp ffmpeg fprobe
+        fi
     fi
 }
 
