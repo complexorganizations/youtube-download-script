@@ -14,7 +14,7 @@ This shell script automates the process of downloading YouTube videos and option
 
 To use this YouTube downloader script, follow these steps:
 
-1. Clone the repository or download the shell script directly using `curl`:
+Clone the repository or download the shell script directly using `curl`:
 
 ```bash
 curl -O https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-downloader-automated.sh
@@ -22,7 +22,7 @@ curl -O https://raw.githubusercontent.com/complexorganizations/youtube-download-
 
 Alternatively, you can download it manually from [this link](https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-downloader-automated.sh).
 
-2. Make the script executable:
+Make the script executable:
 
 ```bash
 chmod +x yt-downloader-automated.sh
