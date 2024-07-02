@@ -11,7 +11,7 @@ function check-current-operatingsystem() {
         CURRENT_DISTRO_VERSION=${VERSION_ID} # CURRENT_DISTRO_VERSION holds the system's VERSION_ID
         CURRENT_DISTRO_LINUX=true            # CURRENT_DISTRO_LINUX is set to true as the system is Linux
     elif [ "$(uname -s)" == "Darwin" ]; then
-        CURRENT_DISTRO="Darwin"                            # If the output is Darwin, set CURRENT_DISTRO to macOS
+        CURRENT_DISTRO="Darwin"                           # If the output is Darwin, set CURRENT_DISTRO to macOS
         CURRENT_DISTRO_VERSION=$(sw_vers -productVersion) # Fetch the macOS version using sw_vers
         CURRENT_DISTRO_MACOS=true                         # CURRENT_DISTRO_MACOS is set to true as the system is macOS
     fi
@@ -38,7 +38,7 @@ function check-dependencies() {
 # Download and install the required dependencies
 function install-dependencies() {
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
-    # Check if the required dependencies are installed on Linux
+        # Check if the required dependencies are installed on Linux
         if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
             sudo apt-get install build-essential procps curl file git -y
         elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
