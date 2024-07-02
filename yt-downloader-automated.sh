@@ -75,7 +75,7 @@ YouTubeURL=(
 # Function to download video and convert to MP4
 function download_video() {
     local YouTubeURL=$1
-    yt-dlp -f 'bestvideo+bestaudio/best' --recode-video mp4 "$YouTubeURL"
+    yt-dlp -f 'bestvideo+bestaudio/best' "$YouTubeURL"
 }
 
 # Download videos concurrently
