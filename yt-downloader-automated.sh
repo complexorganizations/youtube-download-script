@@ -68,8 +68,9 @@ install-dependencies
 
 # List of YouTube video URLs
 YouTubeURL=(
-    "https://www.youtube.com/watch?v=5gnoVjpfWxU"
-    "https://www.youtube.com/watch?v=WkJ0xB1dPwM"
+    "https://www.youtube.com/watch?v=FUKmyRLOlAA"
+    "https://www.youtube.com/watch?v=yXkIHyBfns8"
+    "https://www.youtube.com/watch?v=bj1JRuyYeco"
 )
 
 # Function to download video and convert to MP4
