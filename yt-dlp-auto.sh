@@ -9,14 +9,14 @@
 # 1. System Requirements: Ensure you have 'curl' and 'youtube-dl' installed on your system. This script is compatible with most Linux distributions.
 # 2. Downloading the Script:
 #    - Use the following command to download the script:
-#      curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/youtube-download.sh -o /usr/local/bin/youtube-download.sh
+#      curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o /usr/local/bin/yt-dlp-auto.sh
 # 3. Making the Script Executable:
 #    - Grant execution permissions to the script:
-#      chmod +x /usr/local/bin/youtube-download.sh
+#      chmod +x /usr/local/bin/yt-dlp-auto.sh
 # 4. Running the Script:
 #    - Prepare a file with YouTube video URLs, one URL per line.
 #    - Execute the script and provide the file path as an argument:
-#      bash /usr/local/bin/youtube-download.sh
+#      bash /usr/local/bin/yt-dlp-auto.sh
 # 5. Follow the on-screen instructions to complete the download process for each video in the list.
 
 # Advanced Usage:
