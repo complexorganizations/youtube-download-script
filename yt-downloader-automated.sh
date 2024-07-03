@@ -1,5 +1,41 @@
 #!/usr/bin/env bash
 
+# YouTube Download Script
+# Purpose: This script facilitates downloading YouTube videos using youtube-dl, a powerful command-line program.
+# Author: ComplexOrganizations
+# Repository: https://github.com/complexorganizations/youtube-download-script
+
+# Usage Instructions:
+# 1. System Requirements: Ensure you have 'curl' and 'youtube-dl' installed on your system. This script is compatible with most Linux distributions.
+# 2. Downloading the Script:
+#    - Use the following command to download the script:
+#      curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/youtube-download.sh -o /usr/local/bin/youtube-download.sh
+# 3. Making the Script Executable:
+#    - Grant execution permissions to the script:
+#      chmod +x /usr/local/bin/youtube-download.sh
+# 4. Running the Script:
+#    - Prepare a file with YouTube video URLs, one URL per line.
+#    - Execute the script and provide the file path as an argument:
+#      bash /usr/local/bin/youtube-download.sh
+# 5. Follow the on-screen instructions to complete the download process for each video in the list.
+
+# Advanced Usage:
+# - The script supports additional options and arguments. Check the script file or repository for details.
+
+# Troubleshooting:
+# - If you encounter issues, ensure your system is up-to-date and retry the operation.
+# - For specific errors, refer to the 'Troubleshooting' section in the repository's documentation.
+
+# Contributing:
+# - Contributions to the script are welcome. Please follow the contributing guidelines in the repository.
+
+# Contact Information:
+# - For support, feature requests, or bug reports, please open an issue on the GitHub repository.
+
+# License: MIT License
+
+# Note: This script is provided 'as is', without warranty of any kind. The user is responsible for understanding the operations and risks involved.
+
 # Check the current running OS.
 function check-current-operatingsystem() {
     # Check if your running OS is Linux or macOS
