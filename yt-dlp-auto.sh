@@ -6,7 +6,7 @@
 # Repository: https://github.com/complexorganizations/youtube-download-script
 
 # Usage Instructions:
-# 1. System Requirements: Ensure you have 'curl' and 'youtube-dl' installed on your system. This script is compatible with most Linux distributions.
+# 1. System Requirements: Ensure you have "curl" and "youtube-dl" installed on your system. This script is compatible with most Linux distributions.
 # 2. Downloading the Script:
 #    - Use the following command to download the script:
 #      curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o /usr/local/bin/yt-dlp-auto.sh
@@ -24,7 +24,7 @@
 
 # Troubleshooting:
 # - If you encounter issues, ensure your system is up-to-date and retry the operation.
-# - For specific errors, refer to the 'Troubleshooting' section in the repository's documentation.
+# - For specific errors, refer to the "Troubleshooting" section in the repository's documentation.
 
 # Contributing:
 # - Contributions to the script are welcome. Please follow the contributing guidelines in the repository.
@@ -34,7 +34,7 @@
 
 # License: MIT License
 
-# Note: This script is provided 'as is', without warranty of any kind. The user is responsible for understanding the operations and risks involved.
+# Note: This script is provided "as is", without warranty of any kind. The user is responsible for understanding the operations and risks involved.
 
 # Check the current running OS.
 function check-current-operatingsystem() {
@@ -43,7 +43,7 @@ function check-current-operatingsystem() {
         # If /etc/os-release file is present, source it to obtain system details
         # shellcheck source=/dev/null
         source /etc/os-release
-        CURRENT_DISTRO=${ID}      # CURRENT_DISTRO holds the system's ID
+        CURRENT_DISTRO=${ID}      # CURRENT_DISTRO holds the system"s ID
         CURRENT_DISTRO_LINUX=true # CURRENT_DISTRO_LINUX is set to true as the system is Linux
     elif [ "$(uname -s)" == "Darwin" ]; then
         CURRENT_DISTRO="Darwin"   # If the output is Darwin, set CURRENT_DISTRO to macOS
@@ -89,7 +89,7 @@ function install-dependencies() {
             # Check if the required dependencies are installed on Linux
             elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
                 # Install the required dependencies for Fedora, CentOS, and RHEL
-                sudo yum groupinstall 'Development Tools' -y
+                sudo yum groupinstall "Development Tools" -y
                 sudo yum install procps-ng curl file git -y
             # Check if the required dependencies are installed on Linux
             elif [ "$CURRENT_DISTRO" = "arch" ]; then
@@ -126,7 +126,7 @@ function scrape-download-video() {
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Download videos concurrently
-        yt-dlp -f 'bestvideo+bestaudio/best' --output "%(title)s.%(ext)s" "$url" &
+        yt-dlp -f "bestvideo+bestaudio/best" --output "%(title)s.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
     wait
