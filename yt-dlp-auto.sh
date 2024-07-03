@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # YouTube Download Script
-# Purpose: This script facilitates downloading YouTube videos using youtube-dl, a powerful command-line program.
+# Purpose: This script facilitates downloading YouTube videos using yt-dlp, a powerful command-line program.
 # Author: ComplexOrganizations
 # Repository: https://github.com/complexorganizations/youtube-download-script
 
