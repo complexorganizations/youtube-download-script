@@ -33,6 +33,9 @@ function check-dependencies() {
     fi
 }
 
+# Check if the current os has the required dependencies
+check-dependencies
+
 # Download and install the required dependencies
 function install-dependencies() {
     # Check if the current os has the required dependencies
@@ -66,25 +69,22 @@ function install-dependencies() {
 # Install the required dependencies
 install-dependencies
 
-# List of YouTube video URLs
-YouTubeURL=(
-    "https://www.youtube.com/watch?v=FUKmyRLOlAA"
-    "https://www.youtube.com/watch?v=yXkIHyBfns8"
-    "https://www.youtube.com/watch?v=bj1JRuyYeco"
-)
-
-# Function to download video and convert to MP4
-function download_video() {
-    local YouTubeURL=$1
-    yt-dlp -f 'bestvideo+bestaudio/best' "$YouTubeURL"
+function scrape-download-video() {
+    # List of YouTube video URLs
+    YouTubeURL=(
+        "https://www.youtube.com/watch?v=FUKmyRLOlAA"
+        "https://www.youtube.com/watch?v=yXkIHyBfns8"
+        "https://www.youtube.com/watch?v=bj1JRuyYeco"
+    )
+    # Download videos concurrently
+    for url in "${YouTubeURL[@]}"; do
+        yt-dlp -f 'bestvideo+bestaudio/best' "$url" &
+    done
+    # Wait for all downloads to complete
+    wait
+    # Print message when all videos are downloaded
+    echo "All videos downloaded."
 }
 
-# Download videos concurrently
-for url in "${YouTubeURL[@]}"; do
-    download_video "$url" &
-done
-
-# Wait for all downloads to complete
-wait
-
-echo "All videos downloaded."
+# Scrape and download videos
+scrape-download-video
