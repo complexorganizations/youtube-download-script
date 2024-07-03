@@ -20,14 +20,18 @@ check-current-operatingsystem
 
 # Check if the current os has the required dependencies
 function check-dependencies() {
+    # Check if the current os has the required dependencies
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
         # Check if the required dependencies are installed on Linux
         if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
+            # Set INSTALL_DEPENDENCIES_LINUX to true if the required dependencies are not installed
             INSTALL_DEPENDENCIES_LINUX=true
         fi
+    # Check if the current os has the required dependencies
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
         # Check if the required dependencies are installed on macOS
         if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
+            # Set INSTALL_DEPENDENCIES_MACOS to true if the required dependencies are not installed
             INSTALL_DEPENDENCIES_MACOS=true
         fi
     fi
@@ -44,15 +48,21 @@ function install-dependencies() {
         if [ "$INSTALL_DEPENDENCIES_LINUX" = true ]; then
             # Check if the required dependencies are installed on Linux
             if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
+                # Install the required dependencies for Ubuntu and Debian
                 sudo apt-get install build-essential procps curl file git -y
+            # Check if the required dependencies are installed on Linux
             elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
+                # Install the required dependencies for Fedora, CentOS, and RHEL
                 sudo yum groupinstall 'Development Tools' -y
                 sudo yum install procps-ng curl file git -y
+            # Check if the required dependencies are installed on Linux
             elif [ "$CURRENT_DISTRO" = "arch" ]; then
+                # Install the required dependencies for Arch Linux
                 sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
             fi
             # Install the required dependencies for Linux
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # Install the required dependencies for Linux
             brew install yt-dlp ffmpeg fprobe
         fi
     # Check if the current os has the required dependencies
@@ -61,6 +71,7 @@ function install-dependencies() {
         if [ "$INSTALL_DEPENDENCIES_MACOS" = true ]; then
             # Install the required dependencies for macOS
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # Install the required dependencies for macOS
             brew install yt-dlp ffmpeg fprobe
         fi
     fi
@@ -78,6 +89,7 @@ function scrape-download-video() {
     )
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
+        # Download videos concurrently
         yt-dlp -f 'bestvideo+bestaudio/best' --output "%(title)s.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
