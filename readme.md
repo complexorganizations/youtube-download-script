@@ -17,15 +17,15 @@ To use this YouTube downloader script, follow these steps:
 Clone the repository or download the shell script directly using `curl`:
 
 ```bash
-curl -O https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-downloader-automated.sh
+curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh --create-dirs -o /usr/local/bin/yt-dlp-auto.sh
 ```
 
-Alternatively, you can download it manually from [this link](https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-downloader-automated.sh).
+Alternatively, you can download it manually from [this link](https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh).
 
 Make the script executable:
 
 ```bash
-chmod +x yt-downloader-automated.sh
+chmod +x /usr/local/bin/yt-dlp-auto.sh
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ chmod +x yt-downloader-automated.sh
 Run the script with the following command:
 
 ```bash
-bash yt-downloader-automated.sh
+bash /usr/local/bin/yt-dlp-auto.sh
 ```
 
 ## Contributing
