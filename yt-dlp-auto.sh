@@ -6,7 +6,7 @@
 # Repository: https://github.com/complexorganizations/youtube-download-script
 
 # Usage Instructions:
-# 1. System Requirements: Ensure you have "curl" and "youtube-dl" installed on your system. This script is compatible with most Linux distributions.
+# 1. System Requirements: Ensure you have "curl" and "yt-dlp" installed on your system. This script is compatible with most Linux distributions.
 # 2. Downloading the Script:
 #    - Use the following command to download the script:
 #      curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o /usr/local/bin/yt-dlp-auto.sh
