@@ -19,9 +19,6 @@
 #      bash /usr/local/bin/yt-dlp-auto.sh
 # 5. Follow the on-screen instructions to complete the download process for each video in the list.
 
-# Advanced Usage:
-# - The script supports additional options and arguments. Check the script file or repository for details.
-
 # Troubleshooting:
 # - If you encounter issues, ensure your system is up-to-date and retry the operation.
 # - For specific errors, refer to the "Troubleshooting" section in the repository's documentation.
