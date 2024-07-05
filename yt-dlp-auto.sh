@@ -36,7 +36,7 @@
 # Check if the script is running as root
 function check_root() {
     if [ "$(id -u)" -ne 0 ]; then
-        echo "Error: This script must be run as root."
+        echo "Error: This script requires root privileges to execute. Please run it with administrative permissions in order to proceed."
         exit
     fi
 }
@@ -147,7 +147,7 @@ function scrape-download() {
         rm -rf "$audio_dir"
     fi
     # Print message when all videos are downloaded
-    echo "All videos downloaded."
+    echo "Successful: All the content has been saved locally after downloading it from the internet."
 }
 
 # Scrape and download
