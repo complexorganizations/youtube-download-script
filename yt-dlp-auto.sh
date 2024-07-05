@@ -126,7 +126,7 @@ function scrape-download-video() {
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Download videos concurrently
-        yt-dlp -f "bestvideo+bestaudio/best" --output "%(title)s.%(ext)s" "$url" &
+        yt-dlp -f "bestvideo[ext=webp]+bestaudio[ext=webp]/best[ext=webp]" --output "%(title)s.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
     wait
