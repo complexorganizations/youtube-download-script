@@ -52,10 +52,6 @@ function check-current-operatingsystem() {
         # shellcheck source=/dev/null
         source /etc/os-release
         CURRENT_DISTRO=${ID}      # CURRENT_DISTRO holds the system's ID
-        CURRENT_DISTRO_LINUX=true # CURRENT_DISTRO_LINUX is set to true as the system is Linux
-    elif [ "$(uname -s)" == "Darwin" ]; then
-        CURRENT_DISTRO="Darwin"   # If the output is Darwin, set CURRENT_DISTRO to macOS
-        CURRENT_DISTRO_MACOS=true # CURRENT_DISTRO_MACOS is set to true as the system is macOS
     fi
 }
 
