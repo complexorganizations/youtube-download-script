@@ -1,0 +1,47 @@
+# Name of the workflow
+name: Construct Most Recent Release
+
+# Define the events that trigger the workflow
+on:
+  # Trigger the workflow on push events
+  push:
+    # Only for .sh files
+    paths:
+      - "**.sh"
+  # Trigger the workflow on pull request events
+  pull_request:
+    # Only for .sh files
+    paths:
+      - "**.sh"
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+# Define the jobs in the workflow
+jobs:
+  # Define a job named "build"
+  build:
+    # Name of the job that will be displayed on GitHub
+    name: Build on Ubuntu
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Define the steps in the job
+    steps:
+      # Check out the repository code
+      - name: Check out Repository Code
+        uses: actions/checkout@v4
+
+      # Install required tools
+      - name: Install Required Tools
+        run: sudo apt-get update && sudo apt-get install curl -y
+
+      # Install YT-DLP Automated
+      - name: Install WireGuard Manager
+        run: curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o yt-dlp-auto.sh
+
+      # Chmod YT-DLP Automated
+      - name: Stop WireGuard Service
+        run: sudo chmod +x yt-dlp-auto.sh
+
+      # Run YT-DLP Automated
+      - name: Start WireGuard Service
+        run: ./yt-dlp-auto.sh
