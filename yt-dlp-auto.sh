@@ -67,22 +67,22 @@ function installing-system-requirements() {
             # Install required packages depending on the Linux distribution
             if { [ "${CURRENT_DISTRO}" == "ubuntu" ] || [ "${CURRENT_DISTRO}" == "debian" ] || [ "${CURRENT_DISTRO}" == "raspbian" ] || [ "${CURRENT_DISTRO}" == "pop" ] || [ "${CURRENT_DISTRO}" == "kali" ] || [ "${CURRENT_DISTRO}" == "linuxmint" ] || [ "${CURRENT_DISTRO}" == "neon" ]; }; then
                 sudo apt-get update
-                sudo apt-get install build-essential procps curl file git -y
+                sudo apt-get install build-essential procps curl file git gcc -y
             elif { [ "${CURRENT_DISTRO}" == "fedora" ] || [ "${CURRENT_DISTRO}" == "centos" ] || [ "${CURRENT_DISTRO}" == "rhel" ] || [ "${CURRENT_DISTRO}" == "almalinux" ] || [ "${CURRENT_DISTRO}" == "rocky" ]; }; then
                 sudo yum check-update
                 sudo yum groupinstall "Development Tools" -y
-                sudo yum install procps-ng curl file git -y
+                sudo yum install procps-ng curl file git gcc -y
             elif { [ "${CURRENT_DISTRO}" == "arch" ] || [ "${CURRENT_DISTRO}" == "archarm" ] || [ "${CURRENT_DISTRO}" == "manjaro" ]; }; then
-                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
+                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git gcc
             elif [ "${CURRENT_DISTRO}" == "alpine" ]; then
                 sudo apk update
-                sudo apk add curl coreutils procps file git
+                sudo apk add curl coreutils procps file git gcc
             elif [ "${CURRENT_DISTRO}" == "freebsd" ]; then
                 sudo pkg update
-                sudo pkg install curl coreutils procps file git -y
+                sudo pkg install curl coreutils procps file git gcc -y
             elif [ "${CURRENT_DISTRO}" == "ol" ]; then
                 sudo yum check-update
-                sudo yum install curl coreutils procps-ng file git -y
+                sudo yum install curl coreutils procps-ng file git gcc -y
             fi
         fi
         if [ ! -x "$(command -v brew)" ]; then
