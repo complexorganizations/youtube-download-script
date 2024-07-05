@@ -54,22 +54,29 @@ function check-current-operatingsystem() {
 # Check the current running OS
 check-current-operatingsystem
 
+# Check if your running OS is Linux or macOS (supported operating systems by the script)
+function check-operating-system-status() {
+    # Check if the current OS is supported by the script
+    if { [ "$CURRENT_DISTRO" != "ubuntu" ] || [ "$CURRENT_DISTRO" != "debian" ] || [ "$CURRENT_DISTRO" != "fedora" ] || [ "$CURRENT_DISTRO" != "centos" ] || [ "$CURRENT_DISTRO" != "rhel" ] || [ "$CURRENT_DISTRO" != "arch" ]; }; then
+        # Exit the script if the current OS is not supported
+        echo "Unsupported operating system. The script supports Ubuntu, Debian, Fedora, CentOS, RHEL, and Arch Linux."
+        exit
+    elif [ "$CURRENT_DISTRO_MACOS" != true ]; then
+        # Exit the script if the current OS is not supported
+        echo "Unsupported operating system. The script supports macOS."
+        exit
+    fi
+}
+
+# Check if your running OS is Linux or macOS (supported operating systems by the script)
+check-operating-system-status
+
 # Check if the current os has the required dependencies
 function check-dependencies() {
-    # Check if the current os has the required dependencies
-    if [ "$CURRENT_DISTRO_LINUX" = true ]; then
-        # Check if the required dependencies are installed on Linux
-        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
-            # Set INSTALL_DEPENDENCIES_LINUX to true if the required dependencies are not installed
-            INSTALL_DEPENDENCIES_LINUX=true
-        fi
-    # Check if the current os has the required dependencies
-    elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
-        # Check if the required dependencies are installed on macOS
-        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
-            # Set INSTALL_DEPENDENCIES_MACOS to true if the required dependencies are not installed
-            INSTALL_DEPENDENCIES_MACOS=true
-        fi
+    # Check if the required dependencies are installed on Linux
+    if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
+        # Set INSTALL_DEPENDENCIES to true if the required dependencies are not installed
+        INSTALL_DEPENDENCIES=true
     fi
 }
 
@@ -81,7 +88,7 @@ function install-dependencies() {
     # Check if the current os has the required dependencies
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
         # Install the required dependencies for Linux
-        if [ "$INSTALL_DEPENDENCIES_LINUX" = true ]; then
+        if [ "$INSTALL_DEPENDENCIES" = true ]; then
             # Check if the required dependencies are installed on Linux
             if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
                 # Install the required dependencies for Ubuntu and Debian
@@ -104,7 +111,7 @@ function install-dependencies() {
     # Check if the current os has the required dependencies
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
         # Install the required dependencies for macOS
-        if [ "$INSTALL_DEPENDENCIES_MACOS" = true ]; then
+        if [ "$INSTALL_DEPENDENCIES" = true ]; then
             # Install the required dependencies for macOS
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # Install the required dependencies for macOS
