@@ -33,6 +33,17 @@
 
 # Note: This script is provided "as is", without warranty of any kind. The user is responsible for understanding the operations and risks involved.
 
+# Check if the script is running as root
+function check_root() {
+    if [ "$(id -u)" -ne 0 ]; then
+        echo "Error: This script must be run as root."
+        exit
+    fi
+}
+
+# Call the function to check root privileges
+check_root
+
 # Check the current running OS.
 function check-current-operatingsystem() {
     # Check if your running OS is Linux or macOS
@@ -51,74 +62,56 @@ function check-current-operatingsystem() {
 # Check the current running OS
 check-current-operatingsystem
 
-# Check if your running OS is Linux or macOS (supported operating systems by the script)
-function check-operating-system-status() {
-    # Check if the current OS is supported by the script
-    if { [ "$CURRENT_DISTRO" != "ubuntu" ] || [ "$CURRENT_DISTRO" != "debian" ] || [ "$CURRENT_DISTRO" != "fedora" ] || [ "$CURRENT_DISTRO" != "centos" ] || [ "$CURRENT_DISTRO" != "rhel" ] || [ "$CURRENT_DISTRO" != "arch" ]; }; then
-        # Exit the script if the current OS is not supported
-        echo "Unsupported operating system. The script supports Ubuntu, Debian, Fedora, CentOS, RHEL, and Arch Linux."
-        exit
-    elif [ "$CURRENT_DISTRO_MACOS" != true ]; then
-        # Exit the script if the current OS is not supported
-        echo "Unsupported operating system. The script supports macOS."
-        exit
-    fi
-}
-
-# Check if your running OS is Linux or macOS (supported operating systems by the script)
-check-operating-system-status
-
-# Check if the current os has the required dependencies
-function check-dependencies() {
-    # Check if the required dependencies are installed on Linux
-    if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
-        # Set INSTALL_DEPENDENCIES to true if the required dependencies are not installed
-        INSTALL_DEPENDENCIES=true
-    fi
-}
-
-# Check if the current os has the required dependencies
-check-dependencies
-
-# Download and install the required dependencies
-function install-dependencies() {
-    # Check if the current os has the required dependencies
-    if [ "$CURRENT_DISTRO_LINUX" = true ]; then
-        # Install the required dependencies for Linux
-        if [ "$INSTALL_DEPENDENCIES" = true ]; then
-            # Check if the required dependencies are installed on Linux
-            if { [ "$CURRENT_DISTRO" = "ubuntu" ] || [ "$CURRENT_DISTRO" = "debian" ]; }; then
-                # Install the required dependencies for Ubuntu and Debian
-                sudo apt-get install build-essential procps curl file git -y
-            # Check if the required dependencies are installed on Linux
-            elif { [ "$CURRENT_DISTRO" = "fedora" ] || [ "$CURRENT_DISTRO" = "centos" ] || [ "$CURRENT_DISTRO" = "rhel" ]; }; then
-                # Install the required dependencies for Fedora, CentOS, and RHEL
-                sudo yum groupinstall "Development Tools" -y
-                sudo yum install procps-ng curl file git -y
-            # Check if the required dependencies are installed on Linux
-            elif [ "$CURRENT_DISTRO" = "arch" ]; then
-                # Install the required dependencies for Arch Linux
-                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
+# Define a function to check system requirements
+function installing-system-requirements() {
+    # Check if the current Linux distribution is supported
+    if { [ "${CURRENT_DISTRO}" == "ubuntu" ] || [ "${CURRENT_DISTRO}" == "debian" ] || [ "${CURRENT_DISTRO}" == "raspbian" ] || [ "${CURRENT_DISTRO}" == "pop" ] || [ "${CURRENT_DISTRO}" == "kali" ] || [ "${CURRENT_DISTRO}" == "linuxmint" ] || [ "${CURRENT_DISTRO}" == "neon" ] || [ "${CURRENT_DISTRO}" == "fedora" ] || [ "${CURRENT_DISTRO}" == "centos" ] || [ "${CURRENT_DISTRO}" == "rhel" ] || [ "${CURRENT_DISTRO}" == "almalinux" ] || [ "${CURRENT_DISTRO}" == "rocky" ] || [ "${CURRENT_DISTRO}" == "arch" ] || [ "${CURRENT_DISTRO}" == "archarm" ] || [ "${CURRENT_DISTRO}" == "manjaro" ] || [ "${CURRENT_DISTRO}" == "alpine" ] || [ "${CURRENT_DISTRO}" == "freebsd" ] || [ "${CURRENT_DISTRO}" == "ol" ] || [ "$(uname -s)" == "Darwin" ]; }; then
+        # Check if required packages are already installed
+        if { [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
+            # Install required packages depending on the Linux distribution
+            if { [ "${CURRENT_DISTRO}" == "ubuntu" ] || [ "${CURRENT_DISTRO}" == "debian" ] || [ "${CURRENT_DISTRO}" == "raspbian" ] || [ "${CURRENT_DISTRO}" == "pop" ] || [ "${CURRENT_DISTRO}" == "kali" ] || [ "${CURRENT_DISTRO}" == "linuxmint" ] || [ "${CURRENT_DISTRO}" == "neon" ]; }; then
+                apt-get update
+                apt-get install build-essential procps curl file git -y
+            elif { [ "${CURRENT_DISTRO}" == "fedora" ] || [ "${CURRENT_DISTRO}" == "centos" ] || [ "${CURRENT_DISTRO}" == "rhel" ] || [ "${CURRENT_DISTRO}" == "almalinux" ] || [ "${CURRENT_DISTRO}" == "rocky" ]; }; then
+                yum check-update
+                yum groupinstall "Development Tools" -y
+                yum install procps-ng curl file git -y
+            elif { [ "${CURRENT_DISTRO}" == "arch" ] || [ "${CURRENT_DISTRO}" == "archarm" ] || [ "${CURRENT_DISTRO}" == "manjaro" ]; }; then
+                pacman -Sy --noconfirm base-devel procps-ng curl file git
+            elif [ "${CURRENT_DISTRO}" == "alpine" ]; then
+                apk update
+                apk add curl coreutils
+            elif [ "${CURRENT_DISTRO}" == "freebsd" ]; then
+                pkg update
+                pkg install curl coreutils
+            elif [ "${CURRENT_DISTRO}" == "ol" ]; then
+                yum check-update
+                yum install curl coreutils -y
             fi
-            # Install the required dependencies for Linux
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            # Install the required dependencies for Linux
-            brew install yt-dlp ffmpeg fprobe coreutils
         fi
-    # Check if the current os has the required dependencies
-    elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
-        # Install the required dependencies for macOS
-        if [ "$INSTALL_DEPENDENCIES" = true ]; then
-            # Install the required dependencies for macOS
+        if [ ! -x "$(command -v brew)" ]; then
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            # Install the required dependencies for macOS
-            brew install yt-dlp ffmpeg fprobe coreutils
         fi
+        if [ ! -x "$(command -v yt-dlp)" ]; then
+            brew install yt-dlp
+        fi
+        if [ ! -x "$(command -v ffmpeg)" ]; then
+            brew install ffmpeg
+        fi
+        if [ ! -x "$(command -v fprobe)" ]; then
+            brew install fprobe
+        fi
+        if [ ! -x "$(command -v date)" ]; then
+            brew install coreutils
+        fi
+    else
+        echo "Error: Your current distribution ${CURRENT_DISTRO} is not supported by this script. Please consider updating your distribution or using a supported one."
+        exit
     fi
 }
 
-# Install the required dependencies
-install-dependencies
+# Call the function to check for system requirements and install necessary packages if needed
+installing-system-requirements
 
 # Scrape and download
 function scrape-download() {
