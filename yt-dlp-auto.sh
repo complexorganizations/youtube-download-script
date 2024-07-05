@@ -51,7 +51,7 @@ function check-current-operatingsystem() {
         # If /etc/os-release file is present, source it to obtain system details
         # shellcheck source=/dev/null
         source /etc/os-release
-        CURRENT_DISTRO=${ID}      # CURRENT_DISTRO holds the system's ID
+        CURRENT_DISTRO=${ID} # CURRENT_DISTRO holds the system's ID
     fi
 }
 
