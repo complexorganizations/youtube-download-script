@@ -142,6 +142,13 @@ function scrape-download() {
     elif [ -z "$(ls -A $audio_dir)" ]; then
         rm -rf "$audio_dir"
     fi
+    # Fix the permission for the downloaded files
+    if [ -d "$video_dir" ]; then
+        chmod 777 "$video_dir"/*
+    fi
+    if [ -d "$audio_dir" ]; then
+        chmod 777 "$audio_dir"/*
+    fi
     # Print message when all videos are downloaded
     echo "Successful: All the content has been saved locally after downloading it from the internet."
 }
