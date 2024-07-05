@@ -44,4 +44,4 @@ jobs:
 
       # Run YT-DLP Automated
       - name: Run YT-DLP Automated
-        run: ./yt-dlp-auto.sh
+        run: sudo bash yt-dlp-auto.sh
