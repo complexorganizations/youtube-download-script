@@ -122,28 +122,24 @@ function scrape-download() {
     function generate_timestamp() {
         date +"%Y-%m-%d_%H-%M-%S"
     }
-    # This is the variable that will store the temporary directory
-    temp_dir=$(generate_timestamp)
     # Create a temporary directory to store downloaded content
-    mkdir -p "video-$temp_dir"
-    mkdir -p "audio-$temp_dir"
+    mkdir -p "video-$(generate_timestamp)"
+    mkdir -p "audio-$(generate_timestamp)"
     # Create a variable to store the temporary directory path
-    video_dir="video-$temp_dir"
-    audio_dir="audio-$temp_dir"
+    local video_dir="video-$(generate_timestamp)"
+    local audio_dir="audio-$(generate_timestamp)"
     # List of YouTube video URLs
-    YouTubeURL=(
+    local YouTubeURL=(
         "https://www.youtube.com/watch?v=FUKmyRLOlAA"
         "https://www.youtube.com/watch?v=yXkIHyBfns8"
         "https://www.youtube.com/watch?v=bj1JRuyYeco"
     )
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
-        # Get the current timestamp
-        timestamp=$(generate_timestamp)
         # Extract video and audio concurrently
-        yt-dlp -f "bestvideo+bestaudio/best" --output "$video_dir/%(title)s.$timestamp.%(ext)s" "$url" &
+        yt-dlp -f "bestvideo+bestaudio/best" --output "$video_dir/%(title)s.%(ext)s" "$url" &
         # Alternatively, download audio only (uncomment if needed)
-        # yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.$timestamp.%(ext)s" "$url" &
+        yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
     wait
