@@ -1,0 +1,232 @@
+version: 2.1
+
+# Define the commands to be used in the jobs
+commands:
+  # Define a command to install necessary dependencies
+  install_dependencies:
+    description: "Install necessary dependencies"
+    parameters:
+      update_command:
+        type: string
+      install_command:
+        type: string
+      packages:
+        type: string
+    steps:
+      - run: |
+          << parameters.update_command >>
+          << parameters.install_command >> << parameters.packages >>
+
+  # Define a command to configure the environment and execute YT-DLP Automated
+  configure_and_execute:
+    description: "Configure environment and execute YT-DLP Automated"
+    steps:
+      - run:
+          name: Configure environment and execute YT-DLP Automated
+          command: |
+            curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o yt-dlp-auto.sh
+            chmod +x yt-dlp-auto.sh
+            bash yt-dlp-auto.sh
+
+# Define the jobs to be used in the workflows
+jobs:
+  test_on_alma:
+    description: "Test on AlmaLinux"
+    docker:
+      - image: almalinux:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install --allowerasing
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Alpine Linux
+  test_on_alpine:
+    description: "Test on Alpine Linux"
+    docker:
+      - image: alpine:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apk update
+          install_command: apk add
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Arch Linux
+  test_on_arch:
+    description: "Test on Arch Linux"
+    docker:
+      - image: archlinux:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: pacman -Syu --noconfirm
+          install_command: pacman -S --noconfirm
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  test_on_centos:
+    description: "Test on CentOS"
+    docker:
+      - image: centos:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install --allowerasing
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Debian
+  test_on_debian:
+    description: "Test on Debian"
+    docker:
+      - image: debian:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apt-get update
+          install_command: apt-get -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Fedora
+  test_on_fedora:
+    description: "Test on Fedora"
+    docker:
+      - image: fedora:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install --allowerasing
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Kali Linux
+  test_on_kali:
+    description: "Test on Kali Linux"
+    docker:
+      - image: kalilinux/kali-rolling
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apt-get update
+          install_command: apt-get -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Linux Mint
+  test_on_mint:
+    description: "Test on Linux Mint"
+    docker:
+      - image: linuxmintd/mint20.3-amd64
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apt-get update
+          install_command: apt-get -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Manjaro Linux
+  test_on_manjaro:
+    description: "Test on Manjaro Linux"
+    docker:
+      - image: manjarolinux/base
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: pacman -Syu --noconfirm
+          install_command: pacman -S --noconfirm
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on KDE Neon
+  test_on_neon:
+    description: "Test on KDE Neon"
+    docker:
+      - image: kdeneon/plasma:user
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apt-get update
+          install_command: apt-get -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Oracle Linux
+  test_on_oracle:
+    description: "Test on Oracle Linux"
+    docker:
+      - image: oraclelinux:8
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Red Hat Enterprise Linux
+  test_on_rhel:
+    description: "Test on Red Hat Enterprise Linux"
+    docker:
+      - image: registry.access.redhat.com/ubi8/ubi
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install --allowerasing
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Rocky Linux
+  test_on_rocky:
+    description: "Test on Rocky Linux"
+    docker:
+      - image: rockylinux/rockylinux
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: dnf -y update
+          install_command: dnf -y install --allowerasing
+          packages: curl bash coreutils
+      - configure_and_execute
+
+  # Define a job to test on Ubuntu
+  test_on_ubuntu:
+    description: "Test on Ubuntu"
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - checkout
+      - install_dependencies:
+          update_command: apt-get update
+          install_command: apt-get -y install
+          packages: curl bash coreutils
+      - configure_and_execute
+
+# Define the workflows
+workflows:
+  version: 2
+  comprehensive_tests:
+    description: "Perform comprehensive tests on multiple Linux distributions"
+    jobs:
+      - test_on_alma
+      - test_on_alpine
+      - test_on_arch
+      - test_on_centos
+      - test_on_debian
+      - test_on_fedora
+      - test_on_kali
+      - test_on_mint
+      - test_on_manjaro
+      - test_on_neon
+      - test_on_oracle
+      - test_on_rhel
+      - test_on_rocky
+      - test_on_ubuntu
