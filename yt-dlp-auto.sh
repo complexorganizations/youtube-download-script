@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # YouTube Download Script
 # Purpose: This script facilitates downloading YouTube videos using yt-dlp, a powerful command-line program.
