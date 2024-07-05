@@ -139,12 +139,8 @@ function scrape-download() {
         timestamp=$(generate_timestamp)
         # Extract video and audio concurrently
         yt-dlp -f "bestvideo+bestaudio/best" --output "$temp_dir-video/%(title)s.$timestamp.%(ext)s" "$url" &
-        # Sleep for 2 seconds to avoid rate limiting
-        sleep 2
         # Alternatively, download audio only (uncomment if needed)
         # yt-dlp --extract-audio --audio-format mp3 --output "$temp_dir-audio/%(title)s.$timestamp.%(ext)s" "$url" &
-        # Sleep for 2 seconds to avoid rate limiting
-        # sleep 2
     done
     # Wait for all downloads to complete
     wait
