@@ -119,7 +119,7 @@ install-dependencies
 # Scrape and download
 function scrape-download() {
     # Function to generate current timestamp
-    generate_timestamp() {
+    function generate_timestamp() {
         date +"%Y-%m-%d_%H-%M-%S"
     }
     # This is the variable that will store the temporary directory
