@@ -40,6 +40,9 @@ bash /usr/local/bin/yt-dlp-auto.sh
 
 Contributions are welcome! Fork the repository, make your changes, and submit a pull request.
 
+## Video Player
+[VLC](https://www.videolan.org/)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/complexorganizations/youtube-download-script/blob/main/license.md) file for details.
