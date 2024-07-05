@@ -76,13 +76,13 @@ function installing-system-requirements() {
                 sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
             elif [ "${CURRENT_DISTRO}" == "alpine" ]; then
                 sudo apk update
-                sudo apk add curl coreutils
+                sudo apk add curl coreutils procps file git
             elif [ "${CURRENT_DISTRO}" == "freebsd" ]; then
                 sudo pkg update
-                sudo pkg install curl coreutils
+                sudo pkg install curl coreutils procps file git -y
             elif [ "${CURRENT_DISTRO}" == "ol" ]; then
                 sudo yum check-update
-                sudo yum install curl coreutils -y
+                sudo yum install curl coreutils procps-ng file git -y
             fi
         fi
         if [ ! -x "$(command -v brew)" ]; then
