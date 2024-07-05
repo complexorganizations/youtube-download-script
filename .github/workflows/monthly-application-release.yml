@@ -1,0 +1,29 @@
+name: Monthly App Release
+
+on:
+  schedule:
+    # Trigger the workflow on the first day of every month at midnight
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  release_app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Updated to use the latest version for better compatibility and features
+
+      - name: Get Current Date
+        id: current_date
+        run: echo "CURRENT_DATE=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: Create and Publish Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: releases-${{ env.CURRENT_DATE }}
+          release_name: releases-${{ env.CURRENT_DATE }}
+          draft: false
+          prerelease: false
