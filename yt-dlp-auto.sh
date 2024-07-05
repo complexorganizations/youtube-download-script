@@ -86,7 +86,11 @@ function installing-system-requirements() {
             fi
         fi
         if [ ! -x "$(command -v brew)" ]; then
+            # Install Homebrew on macOS
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            # Add Homebrew to the PATH
+            (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /root/.bashrc
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         fi
         if [ ! -x "$(command -v yt-dlp)" ]; then
             brew install yt-dlp
