@@ -123,14 +123,18 @@ function scrape-download-video() {
         "https://www.youtube.com/watch?v=yXkIHyBfns8"
         "https://www.youtube.com/watch?v=bj1JRuyYeco"
     )
+    # Function to generate current timestamp
+    generate_timestamp() {
+        date +"%Y-%m-%d_%H-%M-%S"
+    }
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Get the current timestamp
-        timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-        # Download videos + audio concurrently
+        timestamp=$(generate_timestamp)
+        # Extract video and audio concurrently
         yt-dlp -f "bestvideo+bestaudio/best" --output "%(title)s.$timestamp.%(ext)s" "$url" &
-        # Download audio only concurrently
-        # yt-dlp --extract-audio --audio-format mp3 --output "%(title)s.%(ext)s" "$url" &
+        # Alternatively, download audio only (uncomment if needed)
+        # yt-dlp --extract-audio --audio-format mp3 --output "%(title)s.$timestamp.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
     wait
