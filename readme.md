@@ -17,7 +17,7 @@ To use this YouTube downloader script, follow these steps:
 Clone the repository or download the shell script directly using `curl`:
 
 ```bash
-curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh --create-dirs -o /usr/local/bin/yt-dlp-auto.sh
+curl https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh -o yt-dlp-auto.sh
 ```
 
 Alternatively, you can download it manually from [this link](https://raw.githubusercontent.com/complexorganizations/youtube-download-script/main/yt-dlp-auto.sh).
@@ -25,7 +25,7 @@ Alternatively, you can download it manually from [this link](https://raw.githubu
 Make the script executable:
 
 ```bash
-chmod +x /usr/local/bin/yt-dlp-auto.sh
+chmod +x yt-dlp-auto.sh
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ chmod +x /usr/local/bin/yt-dlp-auto.sh
 Run the script with the following command:
 
 ```bash
-bash /usr/local/bin/yt-dlp-auto.sh
+bash yt-dlp-auto.sh
 ```
 
 ## Contributing
