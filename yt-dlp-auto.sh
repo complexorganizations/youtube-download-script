@@ -59,14 +59,14 @@ function check-dependencies() {
     # Check if the current os has the required dependencies
     if [ "$CURRENT_DISTRO_LINUX" = true ]; then
         # Check if the required dependencies are installed on Linux
-        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
+        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
             # Set INSTALL_DEPENDENCIES_LINUX to true if the required dependencies are not installed
             INSTALL_DEPENDENCIES_LINUX=true
         fi
     # Check if the current os has the required dependencies
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
         # Check if the required dependencies are installed on macOS
-        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ]; }; then
+        if { [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
             # Set INSTALL_DEPENDENCIES_MACOS to true if the required dependencies are not installed
             INSTALL_DEPENDENCIES_MACOS=true
         fi
@@ -99,7 +99,7 @@ function install-dependencies() {
             # Install the required dependencies for Linux
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # Install the required dependencies for Linux
-            brew install yt-dlp ffmpeg fprobe
+            brew install yt-dlp ffmpeg fprobe coreutils
         fi
     # Check if the current os has the required dependencies
     elif [ "$CURRENT_DISTRO_MACOS" = true ]; then
@@ -108,7 +108,7 @@ function install-dependencies() {
             # Install the required dependencies for macOS
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # Install the required dependencies for macOS
-            brew install yt-dlp ffmpeg fprobe
+            brew install yt-dlp ffmpeg fprobe coreutils
         fi
     fi
 }
