@@ -144,10 +144,10 @@ function scrape-download() {
     fi
     # Fix the permission for the downloaded files
     if [ -d "$video_dir" ]; then
-        chmod 777 "$video_dir"/*
+        chmod -R 777 "$video_dir"
     fi
     if [ -d "$audio_dir" ]; then
-        chmod 777 "$audio_dir"/*
+        chmod -R 777 "$audio_dir"
     fi
     # Print message when all videos are downloaded
     echo "Successful: All the content has been saved locally after downloading it from the internet."
