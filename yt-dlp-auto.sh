@@ -66,28 +66,28 @@ function installing-system-requirements() {
         if { [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
             # Install required packages depending on the Linux distribution
             if { [ "${CURRENT_DISTRO}" == "ubuntu" ] || [ "${CURRENT_DISTRO}" == "debian" ] || [ "${CURRENT_DISTRO}" == "raspbian" ] || [ "${CURRENT_DISTRO}" == "pop" ] || [ "${CURRENT_DISTRO}" == "kali" ] || [ "${CURRENT_DISTRO}" == "linuxmint" ] || [ "${CURRENT_DISTRO}" == "neon" ]; }; then
-                sudo apt-get update
-                sudo apt-get install build-essential procps curl file git gcc -y
+                apt-get update
+                apt-get install build-essential procps curl file git gcc -y
             elif { [ "${CURRENT_DISTRO}" == "fedora" ] || [ "${CURRENT_DISTRO}" == "centos" ] || [ "${CURRENT_DISTRO}" == "rhel" ] || [ "${CURRENT_DISTRO}" == "almalinux" ] || [ "${CURRENT_DISTRO}" == "rocky" ]; }; then
-                sudo yum check-update
-                sudo yum groupinstall "Development Tools" -y
-                sudo yum install procps-ng curl file git gcc -y
+                yum check-update
+                yum groupinstall "Development Tools" -y
+                yum install procps-ng curl file git gcc -y
             elif { [ "${CURRENT_DISTRO}" == "arch" ] || [ "${CURRENT_DISTRO}" == "archarm" ] || [ "${CURRENT_DISTRO}" == "manjaro" ]; }; then
-                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git gcc
+                pacman -Sy --noconfirm base-devel procps-ng curl file git gcc
             elif [ "${CURRENT_DISTRO}" == "alpine" ]; then
-                sudo apk update
-                sudo apk add curl coreutils procps file git gcc
+                apk update
+                apk add curl coreutils procps file git gcc
             elif [ "${CURRENT_DISTRO}" == "freebsd" ]; then
-                sudo pkg update
-                sudo pkg install curl coreutils procps file git gcc -y
+                pkg update
+                pkg install curl coreutils procps file git gcc -y
             elif [ "${CURRENT_DISTRO}" == "ol" ]; then
-                sudo yum check-update
-                sudo yum install curl coreutils procps-ng file git gcc -y
+                yum check-update
+                yum install curl coreutils procps-ng file git gcc -y
             fi
         fi
         if [ ! -x "$(command -v brew)" ]; then
             # Install Homebrew on macOS
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            sudo -u $USER /usr/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # Add Homebrew to the PATH
             (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /root/.bashrc
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
