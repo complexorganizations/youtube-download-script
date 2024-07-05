@@ -66,23 +66,23 @@ function installing-system-requirements() {
         if { [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v brew)" ] || [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v ffprobe)" ] || [ ! -x "$(command -v date)" ]; }; then
             # Install required packages depending on the Linux distribution
             if { [ "${CURRENT_DISTRO}" == "ubuntu" ] || [ "${CURRENT_DISTRO}" == "debian" ] || [ "${CURRENT_DISTRO}" == "raspbian" ] || [ "${CURRENT_DISTRO}" == "pop" ] || [ "${CURRENT_DISTRO}" == "kali" ] || [ "${CURRENT_DISTRO}" == "linuxmint" ] || [ "${CURRENT_DISTRO}" == "neon" ]; }; then
-                apt-get update
-                apt-get install build-essential procps curl file git -y
+                sudo apt-get update
+                sudo apt-get install build-essential procps curl file git -y
             elif { [ "${CURRENT_DISTRO}" == "fedora" ] || [ "${CURRENT_DISTRO}" == "centos" ] || [ "${CURRENT_DISTRO}" == "rhel" ] || [ "${CURRENT_DISTRO}" == "almalinux" ] || [ "${CURRENT_DISTRO}" == "rocky" ]; }; then
-                yum check-update
-                yum groupinstall "Development Tools" -y
-                yum install procps-ng curl file git -y
+                sudo yum check-update
+                sudo yum groupinstall "Development Tools" -y
+                sudo yum install procps-ng curl file git -y
             elif { [ "${CURRENT_DISTRO}" == "arch" ] || [ "${CURRENT_DISTRO}" == "archarm" ] || [ "${CURRENT_DISTRO}" == "manjaro" ]; }; then
-                pacman -Sy --noconfirm base-devel procps-ng curl file git
+                sudo pacman -Sy --noconfirm base-devel procps-ng curl file git
             elif [ "${CURRENT_DISTRO}" == "alpine" ]; then
-                apk update
-                apk add curl coreutils
+                sudo apk update
+                sudo apk add curl coreutils
             elif [ "${CURRENT_DISTRO}" == "freebsd" ]; then
-                pkg update
-                pkg install curl coreutils
+                sudo pkg update
+                sudo pkg install curl coreutils
             elif [ "${CURRENT_DISTRO}" == "ol" ]; then
-                yum check-update
-                yum install curl coreutils -y
+                sudo yum check-update
+                sudo yum install curl coreutils -y
             fi
         fi
         if [ ! -x "$(command -v brew)" ]; then
