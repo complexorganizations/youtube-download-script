@@ -149,7 +149,6 @@ function scrape-download() {
     elif [ -z "$(ls -A $audio_dir)" ]; then
         rm -rf "$audio_dir"
     fi
-    #
     # Print message when all videos are downloaded
     echo "All videos downloaded."
 }
