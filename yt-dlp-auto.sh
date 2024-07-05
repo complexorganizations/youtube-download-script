@@ -139,10 +139,17 @@ function scrape-download() {
         # Extract video and audio concurrently
         yt-dlp -f "bestvideo+bestaudio/best" --output "$video_dir/%(title)s.%(ext)s" "$url" &
         # Alternatively, download audio only (uncomment if needed)
-        yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" &
+        # yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" &
     done
     # Wait for all downloads to complete
     wait
+    # Remove the empty temporary directory, if no files are present
+    if [ -z "$(ls -A $video_dir)" ]; then
+        rm -rf "$video_dir"
+    elif [ -z "$(ls -A $audio_dir)" ]; then
+        rm -rf "$audio_dir"
+    fi
+    #
     # Print message when all videos are downloaded
     echo "All videos downloaded."
 }
