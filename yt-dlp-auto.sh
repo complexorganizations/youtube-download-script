@@ -131,6 +131,8 @@ function scrape-download() {
         "https://www.youtube.com/watch?v=yXkIHyBfns8"
         "https://www.youtube.com/watch?v=bj1JRuyYeco"
     )
+    # Remove duplicates from the list
+    YouTubeURL=($(echo "${YouTubeURL[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Extract video and audio concurrently
