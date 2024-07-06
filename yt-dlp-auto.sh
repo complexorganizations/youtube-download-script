@@ -87,7 +87,7 @@ function installing-system-requirements() {
         fi
         if [ ! -x "$(command -v brew)" ]; then
             # Install Homebrew on macOS
-            sudo -u $USER /usr/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            /usr/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # Add Homebrew to the PATH
             (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /root/.bashrc
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
