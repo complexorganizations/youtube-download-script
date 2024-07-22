@@ -16,7 +16,7 @@
 # 4. Running the Script:
 #    - Prepare a file with YouTube video URLs, one URL per line.
 #    - Execute the script and provide the file path as an argument:
-#      bash yt-dlp-auto.sh
+#      sudo bash yt-dlp-auto.sh
 # 5. Follow the on-screen instructions to complete the download process for each video in the list.
 
 # Troubleshooting:
