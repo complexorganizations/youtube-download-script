@@ -138,10 +138,12 @@ function scrape-download() {
     YouTubeURL=($(echo "${YouTubeURL[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
+        # Extract the title from the youtube video and save that into a variable.
+        YouTubeTitle=$(yt-dlp --get-title "$url" 2>/dev/null || echo "$url" | awk -F 'v=|&' '{print $2}')
         # Extract video and audio concurrently
-        yt-dlp -f "bestvideo+bestaudio/best" --output "$video_dir/%(title)s.%(ext)s" "$url" >> "$video_dir/download.log" 2>&1 &
+        yt-dlp -f "bestvideo+bestaudio/best" --output "$video_dir/%(title)s.%(ext)s" "$url" >> "$video_dir/$YouTubeTitle-download.log" 2>&1 &
         # Alternatively, download audio only (uncomment if needed)
-        # yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" & >> "$audio_dir/download.log" 2>&1 &
+        # yt-dlp -f "bestaudio/best" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" & >> "$audio_dir/$YouTubeTitle-download.log" 2>&1 &
     done
     # Wait for all downloads to complete
     wait
@@ -164,6 +166,13 @@ function scrape-download() {
     fi
     if [ -d "$audio_dir" ]; then
         fdupes -rNdS "$audio_dir"
+    fi
+    # Go though the logs and remove it since, everything went well.
+    if [ -d "$video_dir" ]; then
+        find "$video_dir" -type f -name "*.log" -delete
+    fi
+    if [ -d "$audio_dir" ]; then
+        find "$audio_dir" -type f -name "*.log" -delete
     fi
     # Print message when all videos are downloaded
     echo "Successful: All the content has been saved locally after downloading it from the internet."
