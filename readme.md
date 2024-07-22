@@ -33,7 +33,7 @@ chmod +x yt-dlp-auto.sh
 Run the script with the following command:
 
 ```bash
-bash yt-dlp-auto.sh
+sudo bash yt-dlp-auto.sh
 ```
 
 ## Contributing
