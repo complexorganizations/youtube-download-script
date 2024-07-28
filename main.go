@@ -10,8 +10,17 @@ import (
 )
 
 func main() {
-	// Check if the application is installed.
-	fmt.Println(checkApplication("yt-dlp"))
+	//
+}
+
+// Check if the list of required apps are already installed
+func checkAllApplication() {
+	// List of all the required apps on the system before we can process it.
+	userApps := []string{"yt-dlp", "ffmpeg", "fprobe", "date", "fdupes"}
+	// Loop though the apps and check if they are installed.
+	for _, app := range userApps {
+		fmt.Println(checkApplication(app))
+	}
 }
 
 // Check if an application is installed
