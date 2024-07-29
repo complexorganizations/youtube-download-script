@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -40,7 +40,7 @@ func operatingSystemName() string {
 
 // Read the json file and return it as a string slice.
 func readJSONFile(filePath string) []string {
-	data, err := ioutil.ReadFile(filePath)
+	data, err := os.ReadFile(filePath)
 	if err != nil {
 		log.Println(err)
 	}
