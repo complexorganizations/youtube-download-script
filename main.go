@@ -10,7 +10,20 @@ import (
 )
 
 func main() {
-	//
+	// Check the current operating system.
+	checkOperatingSystem()
+	// Check all the required apps in the system.
+	checkAllApplication()
+}
+
+// Check if the operating system is supported by the application.
+func checkOperatingSystem() {
+	currentOperatingSystem := operatingSystemName()
+	if currentOperatingSystem == "linux" || currentOperatingSystem == "macos" || currentOperatingSystem == "windows" {
+		log.Println("Supported operating system.")
+	} else {
+		log.Fatalln("Error current operating system not supported.")
+	}
 }
 
 // Check if the list of required apps are already installed
