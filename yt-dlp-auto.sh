@@ -141,7 +141,7 @@ function scrape-download() {
         # Extract the title from the youtube video and save that into a variable.
         YouTubeTitle=$(yt-dlp --get-title "$url" | sed 's/[\/:*?"<>|]/_/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]/_/g; s/[^a-zA-Z0-9_]/_/g; s/__/_/g; s/_\{2,\}/_/g; s/^_//; s/_$//')
         # Extract video and audio concurrently
-        yt-dlp -f "bestvideo[height=720]+bestaudio/best[height=720]" --output "$video_dir/${YouTubeTitle}.%(ext)s" --recode-video webm "$url" >>"$video_dir/$YouTubeTitle.log" 2>&1 &
+        yt-dlp -f "bestvideo[height=720]+bestaudio/best[height=720]" --output "$video_dir/${YouTubeTitle}.%(ext)s" "$url" >>"$video_dir/$YouTubeTitle.log" 2>&1 &
         # Alternatively, download audio only (uncomment if needed)
         # yt-dlp -f "bestvideo[height=720]+bestaudio/best[height=720]" --extract-audio --audio-format mp3 --output "$audio_dir/${YouTubeTitle}.%(ext)s" "$url" & >> "$audio_dir/$YouTubeTitle.log" 2>&1 &
     done
