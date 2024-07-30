@@ -148,10 +148,15 @@ function scrape-download() {
     # Wait for all downloads to complete
     wait
     # Remove the empty temporary directory, if no files are present
-    if [ -z "$(ls -A $video_dir)" ]; then
-        rm -rf "$video_dir"
-    elif [ -z "$(ls -A $audio_dir)" ]; then
-        rm -rf "$audio_dir"
+    if [ -d "$video_dir" ]; then
+        if [ -z "$(ls -A $video_dir)" ]; then
+            rm -rf "$video_dir"
+        fi
+    fi
+    if [ -d "$audio_dir" ]; then
+        if [ -z "$(ls -A $audio_dir)" ]; then
+            rm -rf "$audio_dir"
+        fi
     fi
     # Fix the permission for the downloaded files
     if [ -d "$video_dir" ]; then
