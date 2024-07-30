@@ -124,7 +124,7 @@ function scrape-download() {
     }
     # Create a temporary directory to store downloaded content
     mkdir -p "video-$(generate_timestamp)"
-    mkdir -p "audio-$(generate_timestamp)"
+    # mkdir -p "audio-$(generate_timestamp)"
     # Create a variable to store the temporary directory path
     local video_dir="video-$(generate_timestamp)"
     local audio_dir="audio-$(generate_timestamp)"
