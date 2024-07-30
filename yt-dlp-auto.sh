@@ -139,7 +139,7 @@ function scrape-download() {
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Extract the title from the youtube video and save that into a variable.
-        YouTubeTitle=$(yt-dlp --get-title "$url" 2>/dev/null || echo "$url" | awk -F 'v=|&' '{print $2}')
+        YouTubeTitle=$(yt-dlp --get-title "$url" | sed 's/[\/:*?"<>|]/_/g; s/^[[:space:]]*//; s/[[:space:]]*$//')
         # Ensure the log file exists
         touch "$video_dir/$YouTubeTitle.log"
         # touch "$audio_dir/$YouTubeTitle.log"
