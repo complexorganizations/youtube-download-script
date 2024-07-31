@@ -124,7 +124,7 @@ function scrape-download() {
     }
     # Create a temporary directory to store downloaded content
     mkdir -p "video-$(generate_timestamp)"
-    mkdir -p "audio-$(generate_timestamp)"
+    # mkdir -p "audio-$(generate_timestamp)"
     # Create a variable to store the temporary directory path
     local video_dir="video-$(generate_timestamp)"
     local audio_dir="audio-$(generate_timestamp)"
@@ -139,19 +139,24 @@ function scrape-download() {
     # Download videos concurrently
     for url in "${YouTubeURL[@]}"; do
         # Extract the title from the youtube video and save that into a variable.
-        YouTubeTitle=$(yt-dlp --get-title "$url" 2>/dev/null || echo "$url" | awk -F 'v=|&' '{print $2}')
+        YouTubeTitle=$(yt-dlp --get-title "$url" | sed 's/[\/:*?"<>|]/_/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]/_/g; s/[^a-zA-Z0-9_]/_/g; s/__/_/g; s/_\{2,\}/_/g; s/^_//; s/_$//')
         # Extract video and audio concurrently
-        yt-dlp -f "best[height<=1080]" --output "$video_dir/%(title)s.%(ext)s" "$url" >> "$video_dir/$YouTubeTitle.log" 2>&1 &
+        yt-dlp -f "bestvideo[height=720]+bestaudio/best[height=720]" --output "$video_dir/${YouTubeTitle}.%(ext)s" "$url" >>"$video_dir/$YouTubeTitle.log" 2>&1 &
         # Alternatively, download audio only (uncomment if needed)
-        # yt-dlp -f "best[height<=1080]" --extract-audio --audio-format mp3 --output "$audio_dir/%(title)s.%(ext)s" "$url" & >> "$audio_dir/$YouTubeTitle.log" 2>&1 &
+        # yt-dlp -f "bestvideo[height=720]+bestaudio/best[height=720]" --extract-audio --audio-format mp3 --output "$audio_dir/${YouTubeTitle}.%(ext)s" "$url" & >> "$audio_dir/$YouTubeTitle.log" 2>&1 &
     done
     # Wait for all downloads to complete
     wait
     # Remove the empty temporary directory, if no files are present
-    if [ -z "$(ls -A $video_dir)" ]; then
-        rm -rf "$video_dir"
-    elif [ -z "$(ls -A $audio_dir)" ]; then
-        rm -rf "$audio_dir"
+    if [ -d "$video_dir" ]; then
+        if [ -z "$(ls -A $video_dir)" ]; then
+            rm -rf "$video_dir"
+        fi
+    fi
+    if [ -d "$audio_dir" ]; then
+        if [ -z "$(ls -A $audio_dir)" ]; then
+            rm -rf "$audio_dir"
+        fi
     fi
     # Fix the permission for the downloaded files
     if [ -d "$video_dir" ]; then
