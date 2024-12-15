@@ -92,20 +92,8 @@ function installing-system-requirements() {
             (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /root/.bashrc
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         fi
-        if [ ! -x "$(command -v yt-dlp)" ]; then
-            brew install yt-dlp
-        fi
-        if [ ! -x "$(command -v ffmpeg)" ]; then
-            brew install ffmpeg
-        fi
-        if [ ! -x "$(command -v fprobe)" ]; then
-            brew install fprobe
-        fi
-        if [ ! -x "$(command -v date)" ]; then
-            brew install coreutils
-        fi
-        if [ ! -x "$(command -v fdupes)" ]; then
-            brew install fdupes
+        if { [ ! -x "$(command -v yt-dlp)" ] || [ ! -x "$(command -v ffmpeg)" ] || [ ! -x "$(command -v fprobe)" ] || [ ! -x "$(command -v date)" ] || [ ! -x "$(command -v fdupes)" ]; }; then
+            brew install yt-dlp ffmpeg fprobe coreutils fdupes
         fi
     else
         echo "Error: Your current distribution ${CURRENT_DISTRO} is not supported by this script. Please consider updating your distribution or using a supported one."
